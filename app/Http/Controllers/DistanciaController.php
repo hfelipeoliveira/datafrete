@@ -22,7 +22,7 @@ class DistanciaController extends Controller
      */
     public function index()
     {
-        $distancias = $this->objDistancia->all()->sortByDesc('id');
+        $distancias = Distancia::orderBy('id', 'DESC')->paginate(20);
         return view('index', compact('distancias'));
     }
 
@@ -33,7 +33,7 @@ class DistanciaController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -44,7 +44,35 @@ class DistanciaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cepOrigem = str_replace("-", "", $request->get('cep_origem'));
+        $cepDestino = str_replace("-", "", $request->get('cep_destino'));
+        $regras = [
+            'cep_origem' => 'required|min:9|max:9',
+            'cep_destino' => 'required|min:9|max:9'
+        ];
+
+        $feedback = [
+            'cep_origem.min' => 'CEP inválido',
+            'cep_origem.max' => 'CEP inválido',
+
+            'cep_destino.min' => 'CEP inválido',
+            'cep_destino.max' => 'CEP inválido',
+            'required' => 'Campo obrigatório'
+        ];
+
+        $request->validate(
+            $regras, $feedback
+            );
+        
+        $cadastro = Distancia::create([
+            'cep_origem'=>$cepOrigem,
+            'cep_destino'=>$cepDestino,
+            'distancia'=>10.00
+        ]);
+
+        if($cadastro){
+            return redirect('datafrete');
+        }
     }
 
     /**
@@ -67,7 +95,8 @@ class DistanciaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $distancia = Distancia::find($id);
+        return view('create', compact('distancia'));
     }
 
     /**
@@ -79,7 +108,32 @@ class DistanciaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cepOrigem = str_replace("-", "", $request->get('cep_origem'));
+        $cepDestino = str_replace("-", "", $request->get('cep_destino'));
+        $regras = [
+            'cep_origem' => 'required|min:9|max:9',
+            'cep_destino' => 'required|min:9|max:9'
+        ];
+
+        $feedback = [
+            'cep_origem.min' => 'CEP inválido',
+            'cep_origem.max' => 'CEP inválido',
+
+            'cep_destino.min' => 'CEP inválido',
+            'cep_destino.max' => 'CEP inválido',
+            'required' => 'Campo obrigatório'
+        ];
+
+        $request->validate(
+            $regras, $feedback
+            );
+
+        Distancia::where(['id'=>$id])->update([
+            'cep_origem'=>$cepOrigem,
+            'cep_destino'=>$cepDestino,
+            'distancia'=>10.01
+        ]);
+        return redirect('datafrete');
     }
 
     /**
@@ -90,6 +144,6 @@ class DistanciaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return (Distancia::destroy($id) ? "Sim" : "Não");
     }
 }

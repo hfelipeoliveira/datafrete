@@ -5,12 +5,13 @@
     <hr>
 
     <div class="text-center mb-4 mt-3">
-        <a href="">
+        <a href="{{ url('datafrete/create') }}">
             <button class="btn btn-success">Cadastrar</button>
         </a>
     </div>
 
     <div class="col-8 m-auto">
+        @csrf
         <table class="table text-center">
             <thead class="thead-dark">
               <tr>
@@ -33,11 +34,11 @@
                             <button class="btn btn-dark">Visualizar</button>
                         </a>
                         
-                        <a href="">
+                        <a href="{{url("datafrete/$distancia->id/edit")}}">
                             <button class="btn btn-primary">Editar</button>
                         </a>
                         
-                        <a href="">
+                        <a href="{{url("datafrete/$distancia->id")}}" class="js-del">
                             <button class="btn btn-danger">Deletar</button>
                         </a>
                     </td>
@@ -45,5 +46,6 @@
             @endforeach
             </tbody>
           </table>
+          {{ $distancias->links() }}
     </div>
 @endsection

@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Distancia extends Model
 {
     use HasFactory;
+    protected $fillable = ['cep_origem', 'cep_destino', 'distancia'];
 }
