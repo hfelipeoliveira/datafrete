@@ -29,9 +29,9 @@ class AppServiceProvider extends ServiceProvider
         
         Str::macro('cep', function ($cep)
         {
-            $arr1 = substr($cep, 0, 5);
-            $arr2 = substr($cep, -3);
-            $cep = $arr1."-".$arr2;
+            $str1 = substr($cep, 0, 5);
+            $str2 = substr($cep, -3);
+            $cep = $str1."-".$str2;
             return $cep;
         });
     }

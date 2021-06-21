@@ -27,4 +27,52 @@
         }
     }
 
+    function validaCep(elemento, feedback, segundoFeedback){
+        if(elemento.value.length === 9){
+            var cep = elemento.value.replace(/([^\d])+/gim, '')
+            var URL = '/api/validacao-cep/'+cep;
+            fetch(`${URL}`)
+            .then((body) => body.json())
+            .then((data) => {
+                if(data.validade){
+                    feedback.innerHTML = "CEP válido";
+                    //  Se ambos os inputs forem válidos, habilita o botão de enviar
+                    if(segundoFeedback.innerHTML.substr(0, 10) == "CEP válido"){   
+                        btnEnviar.disabled = false;
+                    }
+                }else{
+                    feedback.innerHTML = "CEP inválido";
+                    btnEnviar.disabled = true;
+                }
+            })
+            .catch((error) => console.error('Erro:', error.message || error))
+            
+            
+        }else{
+            feedback.innerHTML = "CEP inválido";
+            btnEnviar.disabled = true;
+        }
+        
+    }
+
+    var cepOrigem = doc.getElementById("cep_origem");
+    var cepDestino = doc.getElementById("cep_destino");
+    var cepOrigemFeedback = doc.getElementById("feedback-cep-origem");
+    var cepDestinoFeedback = doc.getElementById("feedback-cep-destino"); 
+    var btnEnviar = doc.getElementById("btn-enviar"); 
+
+    if(cepOrigem){
+        btnEnviar.disabled = true;
+        //  Analisa as alterações nos input
+        cep_origem.onkeyup = function(e){
+            validaCep(cepOrigem, cepOrigemFeedback, cepDestinoFeedback);
+        }
+        cep_destino.onkeyup = function(e){
+            validaCep(cepDestino, cepDestinoFeedback, cepOrigemFeedback);
+        }
+    }
+    
+
+
+
 })(window, document);
