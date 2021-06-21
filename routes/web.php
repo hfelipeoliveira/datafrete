@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DistanciaController;
-use App\Http\Controllers\CepController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +16,4 @@ use App\Http\Controllers\CepController;
 
 Route::resource('/datafrete', DistanciaController::class);
 Route::get('/api/validacao-cep/{cep}', 'App\Http\Controllers\CepController@cepValido');
+Route::get('/api/coordenadas-cep/{cep1}/{cep2}', 'App\Http\Controllers\CepController@coordenadas');

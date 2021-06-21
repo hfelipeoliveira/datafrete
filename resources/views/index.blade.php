@@ -1,7 +1,7 @@
 @extends('templates.template')
 
 @section('content')
-    <h1 class="text-center">DataFrete</h1>
+    <h1 class="text-center"><a href="/datafrete">DataFrete</a></h1>
     <hr>
 
     <div class="text-center mb-4 mt-3">
