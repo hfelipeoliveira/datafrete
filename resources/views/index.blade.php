@@ -26,9 +26,9 @@
             @foreach ($distancias as $distancia)
                 <tr>
                     <th scope="row">{{ $distancia->id }}</th>
-                    <td>{{ $distancia->cep_origem }}</td>
-                    <td>{{ $distancia->cep_destino }}</td>
-                    <td>{{ $distancia->distancia }}</td>
+                    <td>{{ Str::cep($distancia->cep_origem) }}</td>
+                    <td>{{ Str::cep($distancia->cep_destino) }}</td>
+                    <td>{{ number_format($distancia->distancia, 2) }}</td>
                     <td>
                         <a href="{{url("datafrete/$distancia->id")}}">
                             <button class="btn btn-dark">Visualizar</button>
